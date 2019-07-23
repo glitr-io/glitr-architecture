@@ -1,8 +1,8 @@
 {
     "name": "aws-typescript",
     "scripts": {
-        "build": "sudo docker build -t pulumi .",
-        "pulumi": "sudo docker run --env-file=.env -it docker-pulumi"
+        "build": "sudo docker build -t pulumi . && sudo docker run -v=$PWD:/app -it pulumi npm install",
+        "pulumi": "sudo docker run --env-file=.env -v=$PWD:/app -it pulumi pulumi"
     },
     "devDependencies": {
         "@types/node": "latest"
