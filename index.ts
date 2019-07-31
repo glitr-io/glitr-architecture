@@ -1,33 +1,33 @@
-import * as pulumi from "@pulumi/pulumi";
-import * as aws from "@pulumi/aws";
-import * as awsx from "@pulumi/awsx";
+// Copyright 2016-2019, Pulumi Corporation.  All rights reserved.
 
-// // Create an AWS resource (S3 Bucket)
-// const bucket = new aws.s3.Bucket("my-bucket");
+import * as pulumi from '@pulumi/pulumi';
+// import { createVpc } from './src/network';
+// import { createCluster } from './src/cluster';
+import {
+    // createServices,
+    createContainers
+} from './src'
 
-// // Export the name of the bucket
-// export const bucketName = bucket.id;
+export const name = "glitr-architecture";
 
-// const selected = pulumi.output(aws.route53.getZone({
-//     name: "xoron.io",
-//     privateZone: true,
+export const containers = createContainers(name);
+
+// const vpc = createVpc(name);
+// const cluster = createCluster(name, vpc);
+
+// Export the clusters' kubeconfig.
+// export const kubeconfig = cluster.kubeconfig
+
+// const {
+//     namespaceName: namespaceName2,
+//     services: services2
+// } = createServices(name, cluster);
+
+
+// export const namespaceName = namespaceName2;
+
+// export const services = services2.map(({ deployment, service }) => ({
+//     deploymentName: deployment.metadata.apply((m: any) => m.name),
+//     serviceName: service.metadata.apply((m: any) => m.name),
+//     serviceHostname: service.status.apply((s: any) => s.loadBalancer.ingress[0].hostname)
 // }));
-
-// const www = new aws.route53.Record("www", {
-//     records: ["10.0.0.1"],
-//     ttl: 300,
-//     type: "A",
-//     zoneId: selected.zoneId,
-// });
-
-const fwd = new aws.route53.ResolverRule("fwd", {
-    domainName: "xoron.io",
-    // resolverEndpointId: aws_route53_resolver_endpoint_foo.id,
-    ruleType: "FORWARD",
-    tags: {
-        Environment: "Prod",
-    },
-    targetIps: [{
-        ip: "https://google.com",
-    }],
-});
