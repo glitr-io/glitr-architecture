@@ -5,12 +5,14 @@ import * as pulumi from '@pulumi/pulumi';
 // import { createCluster } from './src/cluster';
 import {
     // createServices,
-    createContainers
+    // createContainers,
+    createApiGateway
 } from './src'
 
 export const name = "glitr-architecture";
 
-export const containers = createContainers(name);
+export const apiGateway = createApiGateway(name);
+// export const containers = createContainers(name);
 
 // const vpc = createVpc(name);
 // const cluster = createCluster(name, vpc);
